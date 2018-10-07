@@ -1,5 +1,7 @@
 ## Pomodoro Timer
 
+⏰ My first app trying out mobile development using React Native.
+
 ![screenshot](app-screenshot.jpg)
 
 ## Features
