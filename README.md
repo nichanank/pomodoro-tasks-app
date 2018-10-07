@@ -2,6 +2,8 @@
 
 ⏰ My first app trying out mobile development using React Native.
 
+See it in action at https://exp.host/@nichanank/pomodoro-tasks-app
+
 ![screenshot](app-screenshot.jpg)
 
 ## Features
