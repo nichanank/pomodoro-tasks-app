@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, Switch, View, Button, TouchableOpacity, StatusBar } from 'react-native'
+import { PropTypes } from 'prop-types'
 import { Constants } from 'expo'
 import { vibrate } from './utils'
 
@@ -39,14 +40,25 @@ function TimerSwitch({ activeMode, onToggle }) {
 }
 
 export default class App extends Component {
-  constructor() {
-    super()
-    this.state = {
+  static propTypes = {
+    timeleft: PropTypes.number.isRequired,
+    activeMode: PropTypes.bool.isRequired,
+    newSession: PropTypes.bool.isRequired,
+  }
+  state = {
+      timeleft: TIME_LIMITS.activeTimer,
+      activeMode: true,
+      newSession: true,
+  }
+
+  componentDidMount() {
+    this.setState({
       timeleft: TIME_LIMITS.activeTimer,
       activeMode: true,
       newSession: true
-    }
+    })
   }
+
   decrement = () => {
     if (this.state.timeleft === 0) {
       vibrate()
@@ -61,41 +73,21 @@ export default class App extends Component {
   startTimer() {
     this.timer = setInterval(this.decrement, 1000)
     if (this.state.newSession) {
-      if (this.state.activeMode) {
-        this.setState({
-          newSession: false,
-          timeleft: TIME_LIMITS.activeTimer
-        })
-      } else {
-        this.setState({
-          newSession: false,
-          timeleft: TIME_LIMITS.breakTimer
-        })
+      (this.state.activeMode) ?
+        this.setState({ newSession: false, timeleft: TIME_LIMITS.activeTimer }) :
+        this.setState({ newSession: false, timeleft: TIME_LIMITS.breakTimer })
       }
     }
-  }
   stopTimer() {
     clearInterval(this.timer)
-    if (!this.state.newSession) {
-      this.setState({
-        timeleft: this.state.timeleft
-      });
-    }
+    !this.state.newSession && this.setState({ timeleft: this.state.timeleft });
   }
   resetTimer() {
     clearInterval(this.timer)
-    if (this.state.activeMode) {
-      this.setState({
-        newSession: true,
-        timeleft: TIME_LIMITS.activeTimer
-      })
-    } else {
-      this.setState({
-        newSession: true,
-        timeleft: TIME_LIMITS.breakTimer
-      })
+    this.state.activeMode ?
+      this.setState({ newSession: true, timeleft: TIME_LIMITS.activeTimer }) :
+      this.setState({ newSession: true, timeleft: TIME_LIMITS.breakTimer })
     }
-  }
   switchTimers() {
     this.state.activeMode ? this.setState({ timeleft: TIME_LIMITS.breakTimer}) : this.setState({ timeleft: TIME_LIMITS.activeTimer})
     this.setState({
