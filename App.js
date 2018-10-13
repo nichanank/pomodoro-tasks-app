@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TextInput, Switch, View, Button, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
+import { StyleSheet, FlatList, Text, TextInput, Switch, View, Button, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
 import { PropTypes } from 'prop-types'
 import { Constants } from 'expo'
 import { vibrate } from './utils'
@@ -144,9 +144,10 @@ export default class App extends Component {
         </View>
         <TimerSwitch activeMode={this.state.activeMode} onToggle={() => this.switchTimers()} />
         <Button title="Show Tasks" onPress={this.toggleTasks} />
-        {this.state.showTasks && <ScrollView>
-          {tasks.map(task => <Row {...task} /> )}
-          </ScrollView>
+        {this.state.showTasks && <TasksList tasks={this.state.tasks} />}
+        <Button title="Create Task" onPress={this.toggleForm} />
+        {this.state.showForm &&
+          <AddTaskForm title='test1' />
         }
       </View>
     );

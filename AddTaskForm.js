@@ -14,9 +14,9 @@ export default class AddTaskForm extends React.Component {
   render() {
     return(
       <View>
-        <TextInput value={this.state.title} />
-        <TextInput value={this.state.timeSpent} />
-        <Button title="New Task" />
+        <TextInput style={styles.input} />
+        <TextInput style={styles.input}  />
+        <Button title="New Task" onPress={this.setState({title: 'test'})} />
       </View>
     )
   }
