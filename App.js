@@ -129,7 +129,15 @@ export default class App extends Component {
     }))
   }
 
+  addTask = newTask => {
+    this.setState(prevState => ({
+      tasks: [...prevState.tasks, newTask],
+      showForm: !prevState.showForm,
+    }))
+  }
+
   render() {
+    if (this.state.showForm) return <AddTaskForm onSubmit={this.addTask}/>
     return (
       <View style={styles.appContainer}>
         <StatusBar barStyle='light-content'/>
@@ -146,9 +154,6 @@ export default class App extends Component {
         <Button title="Show Tasks" onPress={this.toggleTasks} />
         {this.state.showTasks && <TasksList tasks={this.state.tasks} />}
         <Button title="Create Task" onPress={this.toggleForm} />
-        {this.state.showForm &&
-          <AddTaskForm title='test1' />
-        }
       </View>
     );
   }
