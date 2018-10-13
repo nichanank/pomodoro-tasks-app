@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, Switch, View, Button, TouchableOpacity, StatusBar } from 'react-native'
+import { StyleSheet, Text, TextInput, Switch, View, Button, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
 import { PropTypes } from 'prop-types'
 import { Constants } from 'expo'
 import { vibrate } from './utils'
+
+import tasks from './tasks'
+import TasksList from './TasksList'
+import AddTaskForm from './AddTaskForm'
+import Row from './Row'
 
 const TIME_LIMITS = {
   activeTimer: 1500, //25 minutes
@@ -39,23 +44,39 @@ function TimerSwitch({ activeMode, onToggle }) {
   )
 }
 
+function TaskInput() {
+  return (
+    <View style={styles.taskInput}>
+      <TextInput value="asdfasdfasdfadsf" />
+    </View>
+  )
+}
+
 export default class App extends Component {
   static propTypes = {
-    timeleft: PropTypes.number.isRequired,
-    activeMode: PropTypes.bool.isRequired,
-    newSession: PropTypes.bool.isRequired,
+    timeleft: PropTypes.number,
+    activeMode: PropTypes.bool,
+    newSession: PropTypes.bool,
+    showTasks: PropTypes.bool,
+    showForm: PropTypes.bool,
   }
   state = {
       timeleft: TIME_LIMITS.activeTimer,
       activeMode: true,
       newSession: true,
+      tasks: tasks,
+      showForm: false,
+      showTasks: false,
   }
 
   componentDidMount() {
     this.setState({
       timeleft: TIME_LIMITS.activeTimer,
       activeMode: true,
-      newSession: true
+      newSession: true,
+      tasks: tasks,
+      showForm: false,
+      showTasks: false,
     })
   }
 
@@ -96,6 +117,18 @@ export default class App extends Component {
     });
   }
 
+  toggleForm = () => {
+    this.setState(prevState => ({
+      showForm: !prevState.showForm,
+    }))
+  }
+
+  toggleTasks = () => {
+    this.setState(prevState => ({
+      showTasks: !prevState.showTasks,
+    }))
+  }
+
   render() {
     return (
       <View style={styles.appContainer}>
@@ -110,6 +143,11 @@ export default class App extends Component {
           <TimerButton title='Reset' textColor='#ddd' backgroundColor='#415f72' onPress={() => this.resetTimer()} />
         </View>
         <TimerSwitch activeMode={this.state.activeMode} onToggle={() => this.switchTimers()} />
+        <Button title="Show Tasks" onPress={this.toggleTasks} />
+        {this.state.showTasks && <ScrollView>
+          {tasks.map(task => <Row {...task} /> )}
+          </ScrollView>
+        }
       </View>
     );
   }
@@ -126,7 +164,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: '#fff',
     fontSize: 28,
-    marginTop: 40,
+    marginTop: 30,
     padding: 20
   },
   timerContainer: {
@@ -143,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignSelf: 'stretch',
-    margin: 30
+    marginHorizontal: 30
   },
   button: {
     justifyContent: 'center',
@@ -170,9 +208,15 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   switchText: {
-    marginHorizontal: 15,
+    margin: 15,
     color: '#ddd',
     fontSize: 18,
     fontWeight: '500',
+  },
+  taskInput: {
+    borderColor: '#eee',
+    backgroundColor: '#F5F5F5',
+    height: 25,
+    width: 250,
   }
 })
