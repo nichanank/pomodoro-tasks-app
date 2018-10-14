@@ -2,11 +2,17 @@ import React from 'react'
 import { View, TextInput, Button, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import { Constants } from 'expo'
+import { createStackNavigator} from 'react-navigation'
 
 export default class AddTaskForm extends React.Component {
+  static navigationOptions = {
+    headerTitle: "New Task",
+  }
+
   static propTypes = {
     addTask: PropTypes.func,
   }
+
   state = {
     title: '',
     timeSpent: 0,
@@ -20,7 +26,7 @@ export default class AddTaskForm extends React.Component {
   }
 
   validateForm = () => {
-    (this.state.title.length > 0) ? this.setState({isFormValid: true}) : this.setState({isFormValid: false})
+    (this.state.title.length > 0 && this.state.title.length <= 50) ? this.setState({isFormValid: true}) : this.setState({isFormValid: false})
   }
 
   handleTitleChange = title => {
@@ -31,6 +37,12 @@ export default class AddTaskForm extends React.Component {
 
   handleSubmit = () => {
     this.props.onSubmit(this.state)
+  }
+
+  addTask = newTask => {
+    this.setState(prevState => ({
+      tasks: [...prevState.tasks, newTask],
+    }))
   }
 
   render() {
