@@ -4,11 +4,13 @@ import { PropTypes } from 'prop-types'
 import { createStackNavigator } from 'react-navigation'
 import AddTaskScreen from './screens/AddTaskScreen'
 import TimerScreen from './screens/TimerScreen'
+import TaskListScreen from './screens/TaskListScreen'
 
 const AppNavigator = createStackNavigator(
   {
     AddTask: AddTaskScreen,
-    Timer: TimerScreen
+    Timer: TimerScreen,
+    TaskList: TaskListScreen,
   },
   {
     initialRouteName: 'Timer',

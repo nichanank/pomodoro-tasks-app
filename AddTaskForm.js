@@ -9,10 +9,6 @@ export default class AddTaskForm extends React.Component {
     headerTitle: "New Task",
   }
 
-  static propTypes = {
-    addTask: PropTypes.func,
-  }
-
   state = {
     title: '',
     timeSpent: 0,
@@ -37,12 +33,6 @@ export default class AddTaskForm extends React.Component {
 
   handleSubmit = () => {
     this.props.onSubmit(this.state)
-  }
-
-  addTask = newTask => {
-    this.setState(prevState => ({
-      tasks: [...prevState.tasks, newTask],
-    }))
   }
 
   render() {

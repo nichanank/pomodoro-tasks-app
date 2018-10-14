@@ -5,6 +5,7 @@ import { Constants } from 'expo'
 import { vibrate } from '../utils'
 import { createStackNavigator } from 'react-navigation'
 import AddTaskScreen from './AddTaskScreen'
+import TaskDetailsScreen from './TaskListScreen'
 
 import tasks from '../tasks'
 import TasksList from '../TasksList'
@@ -47,20 +48,20 @@ function TimerSwitch({ activeMode, onToggle }) {
 }
 
 export default class TimerScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     hideNavBar: true,
     headerTitle: 'Pomodoro Timer',
     headerTintColor: '#fff',
     headerStyle: {
       backgroundColor: '#1a1b1c'
-    }
-  }
+    },
+    headerRight: <Button title="Create Task" onPress={() => {navigation.navigate('AddTask', tasks: tasks)}} />,
+})
 
   static propTypes = {
     timeleft: PropTypes.number,
     activeMode: PropTypes.bool,
     newSession: PropTypes.bool,
-    showTasks: PropTypes.bool,
     timerIsRunning: PropTypes.bool,
   }
   state = {
@@ -68,7 +69,6 @@ export default class TimerScreen extends Component {
       activeMode: true,
       newSession: true,
       tasks: tasks,
-      showTasks: false,
       timerIsRunning: false,
   }
 
@@ -116,18 +116,6 @@ export default class TimerScreen extends Component {
     });
   }
 
-  toggleTasks = () => {
-    this.setState(prevState => ({
-      showTasks: !prevState.showTasks,
-    }))
-  }
-
-  addTask = newTask => {
-    this.setState(prevState => ({
-      tasks: [...prevState.tasks, newTask],
-    }))
-  }
-
   render() {
     return (
       <View style={styles.appContainer}>
@@ -141,9 +129,7 @@ export default class TimerScreen extends Component {
           <TimerButton title='Reset' textColor='#ddd' backgroundColor='#415f72' onPress={() => this.resetTimer()} />
         </View>
         <TimerSwitch activeMode={this.state.activeMode} onToggle={() => this.switchTimers()} />
-        <Button title="Show Tasks" onPress={this.toggleTasks} />
-        {this.state.showTasks && <TasksList tasks={this.state.tasks} />}
-        <Button title="Create Task" onPress={() => this.props.navigation.navigate('AddTask')} />
+        <Button title="Show Tasks" onPress={() => {this.props.navigation.navigate('TaskList', tasks: tasks)}} />
       </View>
     );
   }

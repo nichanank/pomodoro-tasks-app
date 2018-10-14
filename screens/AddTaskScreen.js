@@ -10,19 +10,13 @@ export default class AddTaskScreen extends React.Component {
     headerTitle: "New Task",
   })
 
-  state = {
-    tasks: tasks,
-  }
-
   handleSubmit = formState => {
     this.props.navigation.navigate('Timer')
   }
 
   addTask = newTask => {
-    this.setState(prevState => ({
-      tasks: [...prevState.tasks, newTask],
-    }))
-    this.props.navigation.navigate('Timer')
+    this.props.navigation.setParams({tasks: [...tasks, newTask]})
+    this.props.navigation.navigate('Timer', tasks: tasks)
   }
 
   render() {
@@ -34,8 +28,8 @@ export default class AddTaskScreen extends React.Component {
 
 const AppNavigator = createStackNavigator(
   {
-    "AddTask": AddTaskScreen,
-    "Timer": TimerScreen,
+    AddTask: AddTaskScreen,
+    Timer: TimerScreen,
   },
   {
     initialRouteName: 'Timer',

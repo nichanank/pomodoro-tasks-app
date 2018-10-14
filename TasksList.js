@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 import Row from './Row'
 import { PropTypes } from 'prop-types'
 
@@ -13,5 +13,12 @@ TasksList.propTypes = {
     renderItem: PropTypes.func,
     tasks: PropTypes.array,
 }
+
+const styles = StyleSheet.create({
+  taskList: {
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  }
+})
 
 export default TasksList
