@@ -9,8 +9,6 @@ import TaskDetailsScreen from './TaskListScreen'
 
 import tasks from '../tasks'
 import TasksList from '../TasksList'
-import AddTaskForm from '../AddTaskForm'
-import Row from '../Row'
 
 const TIME_LIMITS = {
   activeTimer: 1500, //25 minutes
@@ -49,7 +47,6 @@ function TimerSwitch({ activeMode, onToggle }) {
 
 export default class TimerScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    hideNavBar: true,
     headerTitle: 'Pomodoro Timer',
     headerTintColor: '#fff',
     headerStyle: {
@@ -130,6 +127,7 @@ export default class TimerScreen extends Component {
         </View>
         <TimerSwitch activeMode={this.state.activeMode} onToggle={() => this.switchTimers()} />
         <Button title="Show Tasks" onPress={() => {this.props.navigation.navigate('TaskList', tasks: tasks)}} />
+        <Button title="Toggle Navbar" onPress={() => {this.props.navigation.navigate("Main")}} />
       </View>
     );
   }
