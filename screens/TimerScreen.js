@@ -52,7 +52,6 @@ export default class TimerScreen extends Component {
     headerStyle: {
       backgroundColor: '#1a1b1c'
     },
-    headerRight: <Button title="Create Task" onPress={() => {navigation.navigate('AddTask', tasks: tasks)}} />,
 })
 
   static propTypes = {
@@ -126,8 +125,7 @@ export default class TimerScreen extends Component {
           <TimerButton title='Reset' textColor='#ddd' backgroundColor='#415f72' onPress={() => this.resetTimer()} />
         </View>
         <TimerSwitch activeMode={this.state.activeMode} onToggle={() => this.switchTimers()} />
-        <Button title="Show Tasks" onPress={() => {this.props.navigation.navigate('TaskList', tasks: tasks)}} />
-        <Button title="Toggle Navbar" onPress={() => {this.props.navigation.navigate("Main")}} />
+        <Button title="Create Task" onPress={() => {this.props.navigation.navigate('AddTask', tasks: tasks)}} />
       </View>
     );
   }

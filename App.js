@@ -25,20 +25,26 @@ const MainStack = createStackNavigator(
   }
 )
 
-//top navigator
-const MainNavigator = createBottomTabNavigator(
+const AppNavigator = createBottomTabNavigator(
   {
     Timer: MainStack,
     Tasks: TaskListScreen,
   },
   {
     tabBarOptions: {
-      activeTintColor: '#d29104'
+      activeTintColor: '#FAFAFA',
+      inactiveTintColor: '#EEEEEE',
+      labelOptions: {
+        fontSize: 14,
+      },
+      style: {
+        backgroundColor: '#9E9E9E',
+      }
     }
   }
 )
 
-MainNavigator.navigationOptions = {
+AppNavigator.navigationOptions = {
   tabBarIcon: ({ focused, tintColor }) => (
     <Ionicons
       name={`ios-settings${focused ? "" : '-outline'}`}
@@ -47,11 +53,6 @@ MainNavigator.navigationOptions = {
     />
   )
 }
-
-const AppNavigator = createSwitchNavigator({
-    Timer: TimerScreen,
-    Main: MainNavigator
-  })
 
 export default class App extends React.Component {
   render() {
